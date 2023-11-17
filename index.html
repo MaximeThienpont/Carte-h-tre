@@ -20,18 +20,29 @@
 <script src="https://unpkg.com/leaflet.locatecontrol@0.76.0/dist/L.Control.Locate.min.js"></script>
 
 <script>
-  // Position initiale de la carte
-  var initialLat = 44.906124781126465;
-  var initialLng = -0.02467832345387557;
-  var initialZoom = 15;
+ // Créez différentes couches de fond de carte
+var streetLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap contributors' });
 
-  // Créer la carte
-  var map = L.map('map').setView([initialLat, initialLng], initialZoom);
+var satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: 'Imagery © Esri & NASA' });
 
-  // Ajouter la tuile de fond OpenStreetMap
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© OpenStreetMap contributors'
-  }).addTo(map);
+var topoLayer = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', { attribution: '© OpenTopoMap contributors' });
+
+// Créez un objet avec les différentes couches de fond
+var baseMaps = {
+  "Street Map": streetLayer,
+  "Satellite Map": satelliteLayer,
+  "Topographic Map": topoLayer
+};
+
+// Créez une carte Leaflet avec une couche de fond par défaut
+var map = L.map('map', {
+  center: [44.906124781126465, -0.02467832345387557],
+  zoom: 15,
+  layers: [satelliteLayer] // Couche de fond par défaut
+});
+
+// Ajoutez le contrôle de couches à la carte
+L.control.layers(baseMaps).addTo(map);
 
   // Ajouter le contrôle de localisation
   L.control.locate({
