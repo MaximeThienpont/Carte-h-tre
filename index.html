@@ -21,8 +21,8 @@
 
 <script>
   // Position initiale de la carte
-  var initialLat = 0;
-  var initialLng = 0;
+  var initialLat = 44.906124781126465;
+  var initialLng = -0.02467832345387557;
   var initialZoom = 2;
 
   // Créer la carte
@@ -93,7 +93,7 @@
  // Ajoutez votre GeoJSON à la carte
     L.geoJSON(myGeoJSON, {
       style: function (feature) {
-        return { fillColor: 'green', color: 'black', weight: 2 };
+        return { fillColor: 'red', color: 'black', weight: 2 };
       },
       onEachFeature: function (feature, layer) {
         layer.bindPopup("Nom: " + feature.properties.nom + "<br>Surface Viticole: " + feature.properties.surfviti + "<br>Plantation: " + feature.properties.plantation);
