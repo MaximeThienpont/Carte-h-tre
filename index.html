@@ -13,11 +13,11 @@
 
     #legend {
       padding: 10px;
-      background-color: Grey;
+      background-color: white;
       border: 1px solid #ccc;
       border-radius: 5px;
       position: absolute;
-      bottom: 10px;
+      bottom: 20px;
       right: 10px;
       z-index: 1000;
     }
@@ -27,7 +27,7 @@
 
 <div id="map"></div>
 <div id="legend">
-  <h4>Légende</h4>
+  <h5><center>COUCHE</center></h5>
   <label>
     <input type="checkbox" id="layer1Checkbox" checked>
     Parcelles plantées
@@ -64,7 +64,7 @@ var baseMaps = {
 
 // Créez une carte Leaflet avec une couche de fond par défaut
 var map = L.map('map', {
-  center: [44.906124781126465, -0.02467832345387557],
+  center: [44.90321, -0.03908],
   zoom: 15,
   layers: [satelliteLayer] // Couche de fond par défaut
 });
@@ -206,7 +206,7 @@ var myGeoJSON2 = {
     weight: 0.5,
   },
       onEachFeature: function (feature, layer) {
-        layer.bindPopup("Nom: " + feature.properties.Nom + "<br>Surface à planter: " + feature.properties.Surface + "<br>Plantation: " + feature.properties.plantation);
+        layer.bindPopup("<strong><center> " + feature.properties.Nom + "</center></strong><br>Surface à planter: " + feature.properties.Surface + "<br>Plantation: " + feature.properties.plantation);
       }
     }).addTo(map);
 	
