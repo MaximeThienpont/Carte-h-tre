@@ -318,7 +318,7 @@ return {
   },
   onEachFeature: function (feature, layer) {
     var production = feature.properties.production;
-    var popupContent = "<strong>Nom: " + feature.properties.nom + "</strong><br>Rendement: " + production + " hl/ha";
+    var popupContent = "<strong><center> " + feature.properties.nom + "</center></strong><br>Rendement: " + production + " hl/ha";
     layer.bindPopup(popupContent);
 }
 });
