@@ -23,11 +23,16 @@
     }
   </style>
 </head>
+<!-- Balise select pour la légende -->
+<select id="legendDropdown" style="display: none;">
+  <option value="legendUrl">Légende</option>
+</select>
+
 <body>
 
 <div id="map"></div>
 <div id="legend">
-  <h5><center>COUCHES</center></h5>
+  <h5><center>COUCHE</center></h5>
   <label>
     <input type="checkbox" id="layer1Checkbox" checked>
     Parcelles plantées
@@ -47,15 +52,23 @@
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 <script src="https://unpkg.com/leaflet.locatecontrol@0.76.0/dist/L.Control.Locate.min.js"></script>
 
+
+
 <script>
- // Créez différentes couches de fond de carte
+// Créez différentes couches de fond de carte
 var streetLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap contributors' });
-
 var satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: 'Imagery © Esri & NASA' });
-
 var topoLayer = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', { attribution: '© OpenTopoMap contributors' });
+// Ajoutez la couche WMS
+var wmsLayer = L.tileLayer.wms('https://agroenvgeo.data.inra.fr/geoserver/gissol_igcs/wms', {
+  layers: 'etude_30110',
+  format: 'image/png',
+  transparent: true,
+  attribution: 'Attribution de la couche WMS'
+});
 
-// Créez un objet avec les différentes couches de fond
+
+// Ajoutez les couches de fond de carte à la carte
 var baseMaps = {
   "Street Map": streetLayer,
   "Satellite Map": satelliteLayer,
@@ -65,12 +78,16 @@ var baseMaps = {
 // Créez une carte Leaflet avec une couche de fond par défaut
 var map = L.map('map', {
   center: [44.90321, -0.03908],
-  zoom: 15,
-  layers: [satelliteLayer] // Couche de fond par défaut
+  zoom: 14,
+  layers: [streetLayer] // Couche de fond par défaut
 });
 
-// Ajoutez le contrôle de couches à la carte
-L.control.layers(baseMaps).addTo(map);
+// Ajoutez la couche WMS à la carte
+
+wmsLayer.setOpacity(0.7);
+
+// Ajoutez le contrôle des couches à la carte
+L.control.layers(baseMaps, { "Carte de Sol": wmsLayer }).addTo(map);
 
   // Créez la première couche GeoJSON
   var geojsonLayer1;
@@ -194,7 +211,7 @@ var myGeoJSON2 = {
 { "type": "Feature", "properties": { "Nom": "Guimbertau Loterie", "Surface": null, "Date d'arrachage": null, "Type de sol": null }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -0.061063038318452, 44.901290794788558 ], [ -0.060999819247509, 44.901259185663797 ], [ -0.061085350931725, 44.90095626400349 ], [ -0.061040725705179, 44.900814021977531 ], [ -0.060921725101051, 44.900658608991314 ], [ -0.060717192812707, 44.900434708187881 ], [ -0.060624223590733, 44.900397830324884 ], [ -0.060951475252083, 44.900065928493241 ], [ -0.060784130652528, 44.899968464893085 ], [ -0.060613067284096, 44.900105440716558 ], [ -0.060449441453421, 44.900013245486647 ], [ -0.060642817435128, 44.899755098056509 ], [ -0.06020400270741, 44.899573340497106 ], [ -0.060412253764631, 44.899175579195841 ], [ -0.060397378689113, 44.899167676625552 ], [ -0.06034159715593, 44.899251970652614 ], [ -0.060166815018619, 44.899175579195834 ], [ -0.060605629746338, 44.898401122145358 ], [ -0.060984944171993, 44.898411659045976 ], [ -0.060750661732618, 44.898814694045008 ], [ -0.061717541641151, 44.899212457842793 ], [ -0.061082561855064, 44.900076465088794 ], [ -0.061826315630867, 44.900566414648502 ], [ -0.061063038318452, 44.901290794788558 ] ] ] } },
 { "type": "Feature", "properties": { "Nom": "Piscine", "Surface": null, "Date d'arrachage": null, "Type de sol": null }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -0.061670127337949, 44.892795217257429 ], [ -0.06132800060108, 44.892779410362017 ], [ -0.061461876280725, 44.892004867164772 ], [ -0.0618560657819, 44.892073364602695 ], [ -0.061670127337949, 44.892795217257429 ] ] ] } },
 { "type": "Feature", "properties": { "Nom": "Hangar", "Surface": null, "Date d'arrachage": null, "Type de sol": null }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -0.06190069100845, 44.893825290575151 ], [ -0.061975066386029, 44.89351969530091 ], [ -0.062432474958147, 44.893603997607705 ], [ -0.062514287873487, 44.893677762024815 ], [ -0.062454787571422, 44.893806849527046 ], [ -0.062715101392953, 44.893867441520023 ], [ -0.062663038628647, 44.893962281033012 ], [ -0.06190069100845, 44.893825290575151 ] ] ] } },
-{ "type": "Feature", "properties": { "Nom": "Flaujague", "Surface": null, "Date d'arrachage": null, "Type de sol": null }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -0.043524394592773, 44.9039603860695 ], [ -0.044558212341141, 44.904223782535617 ], [ -0.045108590135236, 44.903423053536535 ], [ -0.04418633545324, 44.903196529493194 ], [ -0.043524394592773, 44.9039603860695 ] ] ] } }
+{ "type": "Feature", "properties": { "Nom": "Aiguilhe", "Surface": null, "Date d'arrachage": null, "Type de sol": null }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -0.043524394592773, 44.9039603860695 ], [ -0.044558212341141, 44.904223782535617 ], [ -0.045108590135236, 44.903423053536535 ], [ -0.04418633545324, 44.903196529493194 ], [ -0.043524394592773, 44.9039603860695 ] ] ] } }
 ]
 };
 // Ajoutez votre GeoJSON2 à la carte
@@ -322,7 +339,6 @@ return {
     layer.bindPopup(popupContent);
 }
 });
-	  
 
  // Ajouter le contrôle de localisation
   L.control.locate({
@@ -373,6 +389,8 @@ layer3Checkbox.addEventListener('change', function () {
     geojsonLayer3.removeFrom(map);
   }
 });
+
+
 
 
 
