@@ -409,13 +409,13 @@ geojsonLayer4.addTo(map);
 
 // Fonction pour créer le contenu du popup en fonction des propriétés de la feature
 function createPopupContent(feature) {
-    var popupContent = "";
+    var popupContent = "<strong><center>A faire:</center></strong><br>";
     // Ajoutez les propriétés au popup seulement si elles ne sont pas null ou false
-    popupContent += (feature.properties.Consigne !== null && feature.properties.Consigne !== false) ? "<strong>Consigne:</strong> " + feature.properties.Consigne + "<br>" : "";
-    popupContent += (feature.properties.Fil !== null && feature.properties.Fil !== false) ? "Fil" + "<br>" : "";
-    popupContent += (feature.properties.Piquet !== null && feature.properties.Piquet !== false) ? "Piquet" + "<br>" : "";
-    popupContent += (feature.properties.Bout !== null && feature.properties.Bout !== false) ? "Bout" + "<br>" : "";
-    popupContent += (feature.properties.Marquant !== null && feature.properties.Marquant !== false) ? "Marquant" + "<br>" : "";
+    popupContent += (feature.properties.Consigne !== null && feature.properties.Consigne !== false) ?  "<center>- " + feature.properties.Consigne + "<br>" : "";
+    popupContent += (feature.properties.Fil !== null && feature.properties.Fil !== false) ?  "<center>- Fil" + "<br>" : "";
+    popupContent += (feature.properties.Piquet !== null && feature.properties.Piquet !== false) ? "<center>- Piquet" + "<br>" : "";
+    popupContent += (feature.properties.Bout !== null && feature.properties.Bout !== false) ? "<center>- Bout" + "<br>" : "";
+    popupContent += (feature.properties.Marquant !== null && feature.properties.Marquant !== false) ? "<center>- Marquant" + "<br>" : "";
 
     return popupContent;
 }
