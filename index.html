@@ -6,6 +6,8 @@
   <title>Carte du Vignoble</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet.locatecontrol@0.76.0/dist/L.Control.Locate.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
   <style>
     #map {
       height: 100vh;
@@ -470,7 +472,7 @@ L.control.locate({
     drawCircle: true,
     follow: true,
     setView: 'watch',
-    icon: 'fa-location-arrow'
+    icon: 'fas fa-location-arrow'
 }).addTo(map);
 
 // Ajoutez des boutons pour activer/désactiver les couches
