@@ -120,9 +120,19 @@ var baseMaps = {
 // Créez une carte Leaflet avec une couche de fond par défaut
 var map = L.map('map', {
   center: [44.90321, -0.03908],
-  zoom: 14,
-  layers: [streetLayer] // Couche de fond par défaut
+  zoom: 14 ,
+  layers: [streetLayer], // Couche de fond par défaut
+  // Utilisez le callback "layers" pour garantir que la carte est chargée avant d'effectuer d'autres opérations
+  // Cela est nécessaire car il n'y a pas d'événement "load" standard dans Leaflet
+  // Voir la documentation ici : https://leafletjs.com/reference-1.7.1.html#map-event
+  layers: [streetLayer],
+  whenReady: function () {
+    var currentZoom = map.getZoom();
+    var fontSize = updateLabelFontSize(currentZoom);
+    document.querySelector('.labelClass').style.fontSize = fontSize;
+  }
 });
+
 
 // Ajoutez la couche WMS à la carte
 
@@ -234,7 +244,7 @@ var geojsonLayer1 = L.geoJSON(myGeoJSON1, {
       layer.bindPopup("Nom non défini" + "<br>Surface Viticole: " + feature.properties.surfviti + "<br>Date de Plantation: " + datePlantation);
     }
 
-    // Créez une icône avec une étiquette à chaque polygone
+  // Créez une icône avec une étiquette à chaque polygone
     var label = L.divIcon({
       className: 'labelClass',
       html: nomParcelle || "Nom non défini",
@@ -251,19 +261,25 @@ var geojsonLayer1 = L.geoJSON(myGeoJSON1, {
   }
 }).addTo(map);
 
+// Événement "load" de la carte pour s'assurer que la taille de la police est correctement définie au chargement
+map.on("load", function () {
+  var currentZoom = map.getZoom();
+  var fontSize = updateLabelFontSize(currentZoom);
+  document.querySelector('.labelClass').style.fontSize = fontSize;
+});
+
+
 // Créez une fonction pour définir la taille de la police en fonction du zoom
 function updateLabelFontSize(zoom) {
   // Ajustez ces valeurs en fonction de vos préférences
-  if (zoom <= 12) {
-    return "5px";
-  } else if (zoom > 12 && zoom <= 15) {
-    return "5px";
+  if (zoom <= 15) {
+    return "1px";
+  } else if (zoom > 15 && zoom <= 18) {
+    return "10px";
   } else {
-    return "12px";
+    return "1px";
   }
 }
-
-	
 	 // Créez la deuxième couche GeoJSON
   var geojsonLayer2;
 
@@ -565,6 +581,8 @@ function toggleFilterControls() {
 
 // Initialiser l'état du conteneur des filtres lors du chargement de la page
 toggleFilterControls();
+
+
 
   </script>
 
