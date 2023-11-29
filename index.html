@@ -19,14 +19,14 @@
       border: 1px solid #ccc;
       border-radius: 5px;
       position: absolute;
-      bottom: 20px;
+      bottom: 18px;
       right: 10px;
       z-index: 1000;
     }
 	
 	#filterControlsContainer {
   position: absolute;
-  bottom: 180px;
+  bottom: 220px;
   right: 10px;
   z-index: 1000;
   background-color: white;
@@ -491,9 +491,12 @@ function filterMarkers() {
 
     // Filtrer les données en fonction des cases à cocher
     var filteredFeatures = myGeoJSON4.features.filter(function (feature) {
-        var showMarker = false;  // Initialisez à false, changez à true si au moins une condition est remplie
+        var showMarker = false;  
+		
+		// Initialisez à false, changez à true si au moins une condition est remplie
         ['Consigne', 'Fil', 'Piquet', 'Bout', 'Marquant'].forEach(function (property) {
             var checkbox = document.getElementById(property);
+			
             if (checkbox.checked && (feature.properties[property] !== null && feature.properties[property] !== false)) {
                 showMarker = true;
             }
